@@ -68,7 +68,7 @@ struct ServiceError: LocalizedError {
         config.httpCookieAcceptPolicy = .always
         config.timeoutIntervalForRequest = 90
         config.httpAdditionalHeaders = ["User-Agent": "RajyaNativeIOS/1", "Accept": "application/json"]
-        network = URLSession(configuration: config)
+        self.network = URLSession(configuration: config)
     }
     func request(_ action: String, query: [String: String] = [:], body: [String: Value]? = nil) async throws -> Value {
         if action == "status" { return try await fetchStatus() }
