@@ -22,9 +22,11 @@ workflows:
       - build/RajyaTests.xcresult
       - /tmp/xcodebuild_logs/*.log
   ios-app-store-archive:
-    name: Rajya native iOS — signed IPA
+    name: Rajya native iOS — signed IPA and Apple upload
     instance_type: mac_mini_m2
     max_build_duration: 60
+    integrations:
+      app_store_connect: "K education Codemagic"
     environment:
       xcode: latest
       node: 22
@@ -51,5 +53,10 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-    # No automatic public submission. Connect App Store publishing after native
-    # tests, payment implementation and App Store metadata have been completed.
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: false
+        submit_to_app_store: false
+    # Upload for App Store Connect processing and internal TestFlight testing.
+    # External beta review and public App Store review remain manual steps.
