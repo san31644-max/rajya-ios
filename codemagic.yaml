@@ -1,0 +1,55 @@
+workflows:
+  ios-simulator:
+    name: Rajya native iOS — build and test
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      xcode: latest
+      node: 22
+    scripts:
+      - name: Prepare bundled references and project
+        script: |
+          set -euo pipefail
+          node scripts/prepare-ios.mjs
+          if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+          xcodegen generate --spec ios/project.yml
+      - name: Run native unit tests on iPhone Simulator
+        script: |
+          set -euo pipefail
+          SIMULATOR_ID=$(xcrun simctl list devices available --json | ruby -rjson -e 'd=JSON.parse(STDIN.read)["devices"].values.flatten.find { |v| v["name"].start_with?("iPhone") }; abort "No iPhone simulator available" unless d; puts d["udid"]')
+          xcodebuild test -project ios/Rajya.xcodeproj -scheme Rajya -destination "platform=iOS Simulator,id=$SIMULATOR_ID" -resultBundlePath build/RajyaTests.xcresult CODE_SIGNING_ALLOWED=NO
+    artifacts:
+      - build/RajyaTests.xcresult
+      - /tmp/xcodebuild_logs/*.log
+  ios-app-store-archive:
+    name: Rajya native iOS — signed IPA
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      xcode: latest
+      node: 22
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: lk.keducation.rajya
+    scripts:
+      - name: Prepare native project
+        script: |
+          set -euo pipefail
+          node scripts/prepare-ios.mjs
+          if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+          xcodegen generate --spec ios/project.yml
+      - name: Apply uploaded signing profiles
+        script: |
+          set -euo pipefail
+          cd ios
+          agvtool new-version -all "$((BUILD_NUMBER + 1))"
+          xcode-project use-profiles
+      - name: Build signed IPA
+        script: |
+          set -euo pipefail
+          xcode-project build-ipa --project ios/Rajya.xcodeproj --scheme Rajya
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    # No automatic public submission. Connect App Store publishing after native
+    # tests, payment implementation and App Store metadata have been completed.

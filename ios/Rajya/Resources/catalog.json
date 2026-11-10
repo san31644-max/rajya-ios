@@ -1,0 +1,36 @@
+{
+  "edition": "2026-11-03 bundled source edition",
+  "amendmentCoverage": "unconfirmed",
+  "operator": "K Education (Pvt) Ltd",
+  "pagePreviewWidth": 480,
+  "totalPages": 977,
+  "books": [
+    {
+      "id": 2,
+      "slug": "establishments-i",
+      "title": "ආයතන සංග්‍රහය — I වැනි කාණ්ඩය",
+      "edition": "2013 — ලබාදුන් ගොනුවේ සංස්කරණය",
+      "pages": 531,
+      "file": "reference/books/establishments-i.pdf",
+      "sha256": "314609e10702979fc5749e0a776b63119d2e1a73dc9ae9f88d36deaa8f280d0c"
+    },
+    {
+      "id": 1,
+      "slug": "establishments-ii",
+      "title": "ආයතන සංග්‍රහය — II වැනි කාණ්ඩය",
+      "edition": "1999 — ලබාදුන් ගොනුවේ සංස්කරණය",
+      "pages": 100,
+      "file": "reference/books/establishments-ii.pdf",
+      "sha256": "cdc5993dc01a64ff5d5605553291528ee0308633dfdb7421021061bf937385d2"
+    },
+    {
+      "id": 3,
+      "slug": "financial-regulations",
+      "title": "මුදල් රෙගුලාසි සංග්‍රහය",
+      "edition": "1992 — ලබාදුන් ගොනුවේ සංස්කරණය",
+      "pages": 346,
+      "file": "reference/books/financial-regulations.pdf",
+      "sha256": "b6b034aa0612409202355c71e56563100f64d8fac175393c5eb347cb52fc4bc2"
+    }
+  ]
+}

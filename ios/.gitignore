@@ -1,0 +1,8 @@
+*.xcodeproj/
+DerivedData/
+build/
+*.xcuserstate
+*.mobileprovision
+*.p8
+*.p12
+*.cer
