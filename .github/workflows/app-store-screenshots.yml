@@ -1,0 +1,36 @@
+name: Capture native App Store screenshots
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshots:
+    name: Capture ${{ matrix.device }}
+    runs-on: macos-15
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        device: [iphone, ipad]
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      HOMEBREW_NO_INSTALL_CLEANUP: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare the real native app
+        run: |
+          node scripts/prepare-ios.mjs
+          if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+          xcodegen generate --spec ios/project.yml
+      - name: Capture native screens on simulator
+        run: bash scripts/capture-ios-screenshots.sh '${{ matrix.device }}'
+      - name: Save screenshot files and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rajya-native-${{ matrix.device }}-screenshots
+          path: |
+            build/screenshots/
+            build/screenshot-results/*.log
+          if-no-files-found: error
+          retention-days: 14

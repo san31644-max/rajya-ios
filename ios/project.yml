@@ -52,6 +52,17 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: lk.keducation.rajya.tests
         GENERATE_INFOPLIST_FILE: YES
+  RajyaScreenshotTests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [ScreenshotTests]
+    dependencies:
+      - target: Rajya
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: lk.keducation.rajya.screenshots
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Rajya
 schemes:
   Rajya:
     build:
@@ -59,3 +70,11 @@ schemes:
         Rajya: all
     test:
       targets: [RajyaTests]
+  RajyaScreenshots:
+    build:
+      targets:
+        Rajya: all
+        RajyaScreenshotTests: [test]
+    test:
+      targets: [RajyaScreenshotTests]
+      gatherCoverageData: false
