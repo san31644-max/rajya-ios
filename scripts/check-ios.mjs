@@ -21,8 +21,9 @@ assert(app.includes('delete_account') && app.includes('report_ai_content'), 'Del
 assert(!/bank_payment_info|submit_bank|billing-attachment\.php/.test(app), 'Bank checkout is not approved for this iOS build');
 const resources = path.join(root, 'ios/Rajya/Resources');
 const catalog = JSON.parse(read('ios/Rajya/Resources/catalog.json'));
-assert.equal(catalog.books.length, 3);
-assert.equal(catalog.books.reduce((sum, book) => sum + book.pages, 0), 977);
+assert.equal(catalog.books.length, 4);
+assert.equal(catalog.books.reduce((sum, book) => sum + book.pages, 0), 1033);
+assert.equal(catalog.totalPages, 1033);
 for (const book of catalog.books) {
   const file = fs.readFileSync(path.join(resources, book.slug + '.pdf'));
   assert.equal(crypto.createHash('sha256').update(file).digest('hex'), book.sha256);
@@ -33,5 +34,5 @@ assert.equal(icon[25], 2, 'App Store icon must use RGB without alpha');
 assert(read('ios/project.yml').includes('B5U69WW3Q3'));
 assert(read('codemagic.yaml').includes('xcodebuild test'));
 assert(!read('codemagic.yaml').includes('submit_to_app_store: true'));
-console.log(`PASS native source/API contract checks: ${swift.length} Swift files, ${new Set(actions).size} API actions, 3 original PDF hashes, 977 pages, 1024px icon, Codemagic test workflow.`);
+console.log(`PASS native source/API contract checks: ${swift.length} Swift files, ${new Set(actions).size} API actions, ${catalog.books.length} reference PDF hashes, ${catalog.totalPages} pages, 1024px icon, Codemagic test workflow.`);
 console.log('These source checks do not compile Swift or replace Xcode/device testing.');

@@ -33,7 +33,8 @@ const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
 const originals = {
   'establishments-i': 'establishments-code-volume-i-2013(s).pdf',
   'establishments-ii': 'establishments-code-volume-ii-1999(s).pdf',
-  'financial-regulations': 'Financial-Regulation-Sinhala.pdf'
+  'financial-regulations': 'Financial-Regulation-Sinhala.pdf',
+  'winaya-karya-piliwela': 'winaya-karya-piliwela.pdf'
 };
 for (const book of catalog.books) {
   const target = path.join(resources, book.slug + '.pdf');
@@ -43,6 +44,8 @@ for (const book of catalog.books) {
   if (!fs.existsSync(target)) throw Error('Missing reference PDF: ' + book.slug);
   const hash = crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex');
   if (hash !== book.sha256) throw Error('Source PDF checksum mismatch: ' + book.slug);
+  const indexSource=path.join(root,'assets/reference-text',book.slug+'-text.json');
+  if(fs.existsSync(indexSource))fs.copyFileSync(indexSource,path.join(resources,book.slug+'-text.json'));
 }
 for (const family of ['NotoSansSinhala', 'NotoSansTamil']) {
   const source = path.join(root, 'android/app/src/main/assets/fonts', family + '.ttf');
@@ -85,4 +88,4 @@ fs.writeFileSync(path.join(icons, 'Contents.json'), JSON.stringify({images: [{fi
 const launch = path.join(assets, 'LaunchBackground.colorset');
 fs.mkdirSync(launch, {recursive: true});
 fs.writeFileSync(path.join(launch, 'Contents.json'), JSON.stringify({colors: [{idiom: 'universal', color: {'color-space': 'srgb', components: {red: '0.208', green: '0.035', blue: '0.078', alpha: '1.000'}}}], info: {author: 'xcode', version: 1}}, null, 2));
-console.log('Prepared native iOS assets: 3 original PDFs / 977 pages, licensed fonts, opaque 1024px icon.');
+console.log(`Prepared native iOS assets: ${catalog.books.length} references / ${catalog.totalPages} pages, licensed fonts, opaque 1024px icon.`);

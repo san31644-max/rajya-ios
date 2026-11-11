@@ -76,5 +76,5 @@ schemes:
         Rajya: all
         RajyaScreenshotTests: [test]
     test:
-      targets: [RajyaScreenshotTests]
+      targets: [RajyaScreenshotTests, RajyaTests]
       gatherCoverageData: false

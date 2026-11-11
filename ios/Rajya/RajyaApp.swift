@@ -46,11 +46,11 @@ struct HomeView: View {
                 }.padding(26).frame(maxWidth: .infinity, alignment: .leading)
                     .background(LinearGradient(colors: [Royal.wine, Color(red: 0.17, green: 0.025, blue: 0.06)], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 26))
                 HStack(spacing: 14) {
-                    metric("3", "මූලාශ්‍ර පොත්", "books.vertical")
-                    metric("977", "මුල් PDF පිටු", "doc.text")
+                    metric(String(ReferenceBook.all.count), "මූලාශ්‍ර පොත්", "books.vertical")
+                    metric(String(ReferenceBook.all.reduce(0) { $0 + $1.pages }), "මුල් PDF පිටු", "doc.text")
                 }
                 Text("අද ඉගෙන ගනිමු").font(.title2.bold())
-                quickLink("නිල දැනුම් පුස්තකාලය", "Read all three books offline", "book.closed") { tab = 1 }
+                quickLink("දැනුම් පුස්තකාලය", "Read your reference collection offline", "book.closed") { tab = 1 }
                 quickLink("පාඩම් සහ පුහුණුව", "Lessons and source-based questions", "graduationcap") { tab = 2 }
                 NavigationLink { ClausesView() } label: { tile("වගන්ති සෙවුම", "Find the original provision", "text.magnifyingglass") }.buttonStyle(.plain)
                 NavigationLink { WorkspaceView() } label: { tile("මගේ අවකාශය", "Your notes and letter drafts", "square.and.pencil") }.buttonStyle(.plain)

@@ -1,10 +1,22 @@
 {
-  "edition": "2026-11-03 bundled source edition",
+  "edition": "2026-11-11 source collection",
   "amendmentCoverage": "unconfirmed",
   "operator": "K Education (Pvt) Ltd",
   "pagePreviewWidth": 480,
-  "totalPages": 977,
+  "totalPages": 1033,
   "books": [
+    {
+      "id": 6,
+      "slug": "winaya-karya-piliwela",
+      "title": "විනය කාර්ය පටිපාටිය",
+      "edition": "ලබාදුන් ස්කෑන් පිටපත — සංස්කරණය තහවුරු කර නැත",
+      "pages": 56,
+      "file": "reference/books/winaya-karya-piliwela.pdf",
+      "sha256": "82c561309247933ac87ab7c4bbd919803393e8121d98f949419fe02e150099db",
+      "original_sha256": "47c8e514c9b1831a297c66a22feb869b16b571a9d2f3ae1611e8e30ee396137a",
+      "document_type": "study_reference",
+      "previewWidth": 640
+    },
     {
       "id": 2,
       "slug": "establishments-i",

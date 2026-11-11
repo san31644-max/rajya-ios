@@ -35,15 +35,16 @@ final class StoreScreenshots: XCTestCase {
     }
     func test03PDFReader() {
         tab("පුස්තකාලය")
-        let book = app.staticTexts["ආයතන සංග්‍රහය — I වැනි කාණ්ඩය"].firstMatch
+        let book = app.staticTexts["විනය කාර්ය පටිපාටිය"].firstMatch
         XCTAssertTrue(book.waitForExistence(timeout: 20)); book.tap()
         let jump = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "පිටුව ")).firstMatch
         XCTAssertTrue(jump.waitForExistence(timeout: 30)); jump.tap()
         let field = app.alerts.textFields.firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 10)); field.tap()
-        field.typeText(XCUIKeyboardKey.delete.rawValue + "42")
+        field.typeText(XCUIKeyboardKey.delete.rawValue + "10")
         app.alerts.buttons["Go"].tap()
-        XCTAssertTrue(app.buttons["පිටුව 42 / 531"].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.buttons["පිටුව 10 / 56"].waitForExistence(timeout: 20))
+        Thread.sleep(forTimeInterval: 10)
         capture("03-native-pdf-reader")
     }
     func test04Learning() {

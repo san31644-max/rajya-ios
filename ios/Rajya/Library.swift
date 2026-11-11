@@ -9,6 +9,7 @@ struct ReferenceBook: Codable, Identifiable, Hashable {
     let pages: Int
     let sha256: String
     var url: URL? { Bundle.main.url(forResource: slug, withExtension: "pdf") }
+    var ocrIndexURL: URL? { Bundle.main.url(forResource: slug + "-text", withExtension: "json") }
     static let all: [ReferenceBook] = {
         guard let url = Bundle.main.url(forResource: "catalog", withExtension: "json"),
               let data = try? Data(contentsOf: url), let catalog = try? JSONDecoder().decode(Catalog.self, from: data) else { return [] }
@@ -42,12 +43,14 @@ struct LibraryView: View {
     let view = PDFView()
     @Published var page = 1
     @Published var query = ""
-    @Published var matches: [PDFSelection] = []
+    @Published var matches: [Int] = []
     @Published var searchIndex = 0
     @Published var searching = false
     @Published var documentMissing = false
     private var observer: NSObjectProtocol?
+    private let ocrIndexURL: URL?
     init(book: ReferenceBook, page: Int) {
+        ocrIndexURL = book.ocrIndexURL
         view.autoScales = true
         view.displayDirection = .vertical
         view.displayMode = .singlePageContinuous
@@ -71,21 +74,23 @@ struct LibraryView: View {
         let term = query.trimmingCharacters(in: .whitespacesAndNewlines)
         searching = true
         // Search a separate PDFDocument away from the UI thread, return page indices only.
+        let ocrURL = ocrIndexURL
         let pages = await Task.detached(priority: .userInitiated) { () -> [Int] in
             guard !term.isEmpty, let document = PDFDocument(url: url) else { return [] }
-            return document.findString(term, withOptions: .caseInsensitive).compactMap { $0.pages.first.map { document.index(for: $0) } }
+            var hits = document.findString(term, withOptions: .caseInsensitive).compactMap { $0.pages.first.map { document.index(for: $0) } }
+            if let ocrURL, let data = try? Data(contentsOf: ocrURL), let index = try? JSONDecoder().decode(Value.self, from: data) {
+                hits += index["pages"].list.filter { $0["text"].text.localizedCaseInsensitiveContains(term) }.map { $0["page_number"].int - 1 }.filter { $0 >= 0 && $0 < document.pageCount }
+            }
+            return Array(Set(hits)).sorted()
         }.value
-        matches = Array(Set(pages)).sorted().compactMap { index in
-            guard let page = view.document?.page(at: index) else { return nil }
-            return page.selection(for: page.bounds(for: .mediaBox))
-        }
+        matches = Array(Set(pages)).sorted()
         searchIndex = 0; searching = false
         if let first = pages.first { jump(first + 1) }
     }
     func nextMatch() {
         guard !matches.isEmpty else { return }
         searchIndex = (searchIndex + 1) % matches.count
-        view.go(to: matches[searchIndex]); view.setCurrentSelection(matches[searchIndex], animate: false)
+        jump(matches[searchIndex] + 1)
     }
 }
 struct PDFSurface: UIViewRepresentable {

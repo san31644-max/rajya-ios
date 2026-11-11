@@ -22,9 +22,18 @@ final class CoreTests: XCTestCase {
     }
     func testBundledReferencesHaveOriginalPageCounts() {
         let books = ReferenceBook.all
-        XCTAssertEqual(books.count, 3)
-        XCTAssertEqual(books.reduce(0) { $0 + $1.pages }, 977)
-        XCTAssertEqual(Set(books.map(\.id)).count, 3)
+        XCTAssertEqual(books.count, 4)
+        XCTAssertEqual(books.reduce(0) { $0 + $1.pages }, 1033)
+        XCTAssertEqual(Set(books.map(\.id)).count, 4)
         for book in books { XCTAssertNotNil(book.url); XCTAssertEqual(book.sha256.count, 64) }
+    }
+    func testWinayaReferenceHasOfflineOCRIndex() throws {
+        let book = try XCTUnwrap(ReferenceBook.all.first { $0.slug == "winaya-karya-piliwela" })
+        XCTAssertEqual(book.pages, 56)
+        let url = try XCTUnwrap(book.ocrIndexURL)
+        let index = try JSONDecoder().decode(Value.self, from: Data(contentsOf: url))
+        XCTAssertEqual(index["pages"].list.count, 56)
+        XCTAssertEqual(index["source_sha256"].text, book.sha256)
+        XCTAssertTrue(index["pages"].list.contains { $0["text"].text.contains("විනය") })
     }
 }

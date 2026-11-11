@@ -70,7 +70,7 @@ struct AccountView: View {
             } else { Section { Button("Sign in / Create account") { session.showLogin = true } } }
             Section("About Rajya") {
                 Text("K Education (Pvt) Ltd · Private education platform. Not a government application.").font(.footnote)
-                Text("Source editions: Establishments Code volumes I (2013) and II (1999), Financial Regulations (1992). Amendment coverage is unconfirmed.").font(.footnote)
+                Text("Source editions: Establishments Code I (2013), II (1999), Financial Regulations (1992), and the supplied disciplinary-procedure study reference (edition unconfirmed). Amendment coverage is unconfirmed.").font(.footnote)
                 Link("Privacy policy", destination: AppSession.baseURL.appendingPathComponent("privacy.php"))
                 Link("Contact support", destination: URL(string: "mailto:hello@keducation.site")!)
                 Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0")").font(.caption).foregroundStyle(.secondary)

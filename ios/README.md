@@ -1,13 +1,13 @@
 # Rajya — native iPhone and iPad app
 
-SwiftUI screens, PDFKit reading and URLSession JSON networking. There is no WebView, embedded website, JavaScript runtime, or HTML UI in this target. The existing PHP service supplies accounts, AI and saved data; the three reference PDFs are bundled and work without a network connection or sign-in.
+SwiftUI screens, PDFKit reading and URLSession JSON networking. There is no WebView, embedded website, JavaScript runtime, or HTML UI in this target. The existing PHP service supplies accounts, AI and saved data; the four reference PDFs are bundled and work without a network connection or sign-in.
 
 Apple Team ID: `B5U69WW3Q3`. Provisional bundle ID: `lk.keducation.rajya` (confirm/register it in your Apple Developer account). Minimum iOS: 17.0. The first iOS marketing version is 1.0.0; Android versions are independent.
 
 ## Implemented source
 
 - Native burgundy/gold home screen and five-tab navigation, Dynamic Type and reduced-motion-aware entry animation.
-- Offline library with three original PDFs / 977 pages, PDFKit pinch zoom, in-document text search, page jumps, source links, page bookmarks and native sharing.
+- Offline library with four reference PDFs / 1,033 pages (three unchanged source editions plus the 56-page disciplinary-procedure reading copy), PDFKit pinch zoom, in-document text search, page jumps, source links, page bookmarks and native sharing.
 - Native sign-in/registration using existing account APIs, CSRF headers and isolated in-memory session cookies; reauthenticate after relaunch.
 - Source provision search, draft/review status and source-page navigation.
 - Courses, lessons, completion, procedure guides, practice questions and server-scored answers.
@@ -25,6 +25,10 @@ Apple Team ID: `B5U69WW3Q3`. Provisional bundle ID: `lk.keducation.rajya` (confi
 6. Run **ios-app-store-archive** (display name: **Rajya native iOS — signed IPA and Apple upload**) to produce a signed IPA and upload it to the existing Rajya App Store Connect record. The build number increments from Codemagic's build number; ensure it exceeds any number already uploaded for this app version. Wait for Apple to finish processing it, then open Rajya → TestFlight to add internal testers and install the app. This configuration does not submit to external TestFlight beta review or public App Store review and does not release the app automatically.
 
 The simulator workflow and signed workflow are separate: only archive a revision after its simulator checks pass. On a Mac, prepare with `node scripts/prepare-ios.mjs`, install XcodeGen if necessary, run `xcodegen generate --spec ios/project.yml`, then open `ios/Rajya.xcodeproj`.
+
+## New reference update — 2026-11-11
+
+The collection now includes Winaya Karya Piliwela, a supplied 56-page scan. The original upload remains preserved; the bundled reading copy corrects page orientation without changing page order. An offline Unicode OCR index supports in-document search. Its edition, publisher, amendment coverage and OCR accuracy require review. Home counters come from the catalogue. Existing build 3 predates this addition; build and upload a new IPA before selecting it for review.
 
 ## Current verification limits and release work
 

@@ -16,13 +16,13 @@ Description:
 
 Rajya is a private learning companion by K Education (Pvt) Ltd for Sri Lankan public-service employees and examination candidates.
 
-Read the three included Sinhala reference books offline with native PDF navigation, zoom, page jumps and text search. Explore source-linked provisions, follow reading lessons and practise with questions and timed self-assessments. Keep private notes, letter drafts and conversations in your account.
+Read the four included Sinhala reference PDFs offline with native PDF navigation, zoom, page jumps and text search. Explore source-linked provisions, follow reading lessons and practise with questions and timed self-assessments. Keep private notes, letter drafts and conversations in your account.
 
 Ask the AI assistant questions in Sinhala, Tamil or English, with optional selected photos. Questions, relevant conversation context and selected photos are sent to Google Gemini after your acknowledgement. AI can be wrong; check the cited PDF pages and current official provisions. You can report an answer from the app.
 
 The bundled PDFs work without an account or internet. Online AI, saved workspace and interactive learning require a connection and account. Some interactive features require active membership. Final purchase/renewal wording must be added after the iOS payment approach is implemented and tested.
 
-Rajya is not operated, endorsed or authorised by the Sri Lankan government. The supplied PDF editions are Establishments Code I (2013), Establishments Code II (1999), and Financial Regulations (1992). Current amendment coverage is unconfirmed. Extracted provisions, lessons, template letters and practice questions may be draft or unreviewed. Self-assessments are not official examination papers, schedules or qualifications.
+Rajya is not operated, endorsed or authorised by the Sri Lankan government. The supplied PDF editions are Establishments Code I (2013), Establishments Code II (1999), and Financial Regulations (1992). The library also includes the supplied 56-page disciplinary-procedure study scan, whose publisher and edition date are unconfirmed. Current amendment coverage is unconfirmed. Extracted provisions, lessons, template letters and practice questions may be draft or unreviewed. Self-assessments are not official examination papers, schedules or qualifications.
 
 Review notes to complete:
 
